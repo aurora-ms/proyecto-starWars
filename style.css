@@ -1,0 +1,168 @@
+body {
+    margin: 0;
+    font-family: Roboto;
+}
+
+div#img-intro {
+    background-image: url(style/intro-imgf.jpg);
+    background-attachment: fixed;
+    background-position: top center;
+    background-size: 100% 560px;
+    text-align: center;
+    color: white;
+    font-family: Roboto;
+    text-transform: uppercase;
+    font-weight: 900;
+    padding: 60px 0 75px;
+}
+
+div#img-intro img {
+    width: 300px;
+}
+
+.division {
+    display: grid;
+    grid-template-columns: auto auto;
+    text-align: center;
+    height: 470px;
+}
+
+div#mov, div#seri {
+    padding: 280px 0;
+    font-family: Roboto;
+    text-transform: uppercase;
+    font-weight: 900;
+    font-size: 30px;
+    color: black;
+    background-color: white;
+}
+
+#buttom-efectOne h3, #buttom-efectTwo h3 {
+    margin: 0;
+    transition: 0.5s ease;
+}
+
+hr.red-line {
+    border: none;
+    height: 5px;
+    background-color: #ffc500;
+    width: 160px;
+    margin-top: 7px;
+    margin-bottom: 0px;
+}
+
+
+#buttom-efectOne, #buttom-efectTwo {
+    color: black;
+    background-color: white;
+    width: 250px;
+    margin: auto;
+    padding: 10px 0 0px;
+    transition: 0.5s ease;
+}
+
+div#mov:hover {
+    background-image: url(style/fondo-movies.jpg);
+    transition: all 2s ease;
+}
+div#mov {
+    background-image: url(style/fondo-white.jpg);
+}
+
+div#seri:hover {
+    background-image: url(style/fondo-species.jpg);
+    transition: all 2s ease;
+}
+div#seri {
+    background-image: url(style/fondo-white.jpg);
+}
+
+.division a {
+    text-decoration: none;
+}
+
+#bigSpecies {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    text-align: center;
+    grid-row-gap: 90px;
+}
+
+
+
+
+
+nav#close {
+    position: absolute;
+    top: 360px;
+    right: 3%;
+    text-align: right;
+    background-color: #040404;
+    padding: 20px 30px;
+    font-size: 38px;
+    color: #ffc500;
+    font-weight: 900;
+}
+
+
+
+div.speciesBox {
+    display: grid;
+    margin-top: 70px;
+}
+
+div#speContent {
+    text-align: left;
+}
+
+
+.circulos {
+    width: 20px;
+    height: 20px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #ffc500;
+}
+
+
+div#speContent {
+    text-align: left;
+    margin-top: 50px;
+}
+
+
+div#speContent p {
+    margin: 0 10px;
+}
+
+ul#listado { 
+    list-style-image: url("img/puntos.png"); 
+}
+
+
+.content {
+    margin-left: 43px;
+    margin-top: 25px;
+}
+
+.content p {
+    display: list-item;
+    list-style-image: url(img/plus.png);
+    font-size: 23px;
+}
+
+
+li {
+    margin: 10px;
+    font-weight: 500;
+}
+
+
+.secondContent {
+    margin-top: 20px;
+}
+.secondContent h4 {
+    display: inline;
+    margin: 20px;
+}
