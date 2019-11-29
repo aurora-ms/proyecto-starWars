@@ -1,78 +1,23 @@
-// var species = [1, 2, 3, 6, 8, 10, 34, 20];
-// var bigBox = document.createElement("div");
-// bigBox.setAttribute("id", "bigSpecies")
-// document.getElementById("contenedor").appendChild(bigBox);
-
-// function peticionAjax(url, imagesRute) {
-//     var xmlHttp = new XMLHttpRequest();
-//     xmlHttp.onreadystatechange = function () {
-
-
-//         if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-//             var info = JSON.parse(xmlHttp.responseText);
-//             console.log(info.name);
-
-//             var cajasInd = document.createElement("div");
-//             cajasInd.setAttribute("class", "speciesBox");
-
-//             var ids = info.url;
-//             cajasInd.setAttribute("id", "spe"+ids.slice(29, -1));
-
-//             var imagenes = document.createElement("img");
-//             imagenes.setAttribute("src", imagesRute);
-
-//             var nombres = document.createElement("h1");
-//             nombres.innerHTML = info.name;
-
-//             cajasInd.addEventListener("click", function () {
-
-//                 var datosSpecies = document.createElement("p");
-//                 datosSpecies.innerHTML = info.eye_colors;
-//                 cajasInd.appendChild(datosSpecies)
-
-//                 console.log(cajasInd.id);
-
-//             })
-
-//             bigBox.appendChild(cajasInd);
-//             cajasInd.appendChild(nombres);
-//             cajasInd.appendChild(imagenes);
-
-//         } else if (xmlHttp.readyState === 4 && xmlHttp.status === 404) {
-//             console.error("ERROR! 404");
-//             console.info(JSON.parse(xmlHttp.responseText));
-//         }
-
-//     };
-//     xmlHttp.open("GET", url, true);
-//     xmlHttp.send();
-// }
-
-// for (var i = 0; i < species.length; i++) {
-
-//     var imagesRute = "https://starwars-visualguide.com/assets/img/species/"+ species[i] + ".jpg"
-//     peticionAjax("https://swapi.co/api/species/" + species[i] + "/?format=json", imagesRute);
-// }
-
-
-
-
-
-
-
-
 // species = Array con las especies seleccionadas.
 var species = [1, 2, 3, 6, 8, 10, 34, 20];
 
-// bigBox es la caja (div) donde se colocará todo el contenido de las especies
+// bucle para la selección de toda la información 
+for (var i = 0; i < species.length; i++) {
+
+    var imagesRute = "https://starwars-visualguide.com/assets/img/species/" + species[i] + ".jpg"
+    peticionAjax("https://swapi.co/api/species/" + species[i] + "/?format=json", imagesRute);
+}
+
+// bigBox-> contenedor con todo el contenido
 var bigBox = document.createElement("div");
 bigBox.setAttribute("id", "bigSpecies")
 
-// Unimos al main del html bigBox  | body | -> | main#contenedor | -> | bigBox#bigSpecies |
+// main#contenedor->bigBox  
+//| body | -> | main#contenedor | -> | bigBox#bigSpecies |
 document.getElementById("contenedor").appendChild(bigBox);
 
 
-// Creamos un array vacio para controlar los ids que se le asignarán a las diferentes cajas de las especies.
+// asignedIds-> control de los ids que se le asignarán a cajasInd ln. 33
 var asignedIds = [];
 
 
@@ -85,83 +30,132 @@ function peticionAjax(url, imagesRute) {
 
             console.log(info.name);
 
-            //Creamos las cajas de las especies y le asignamos la clase speciesBox
+            //cajasInd-> contenedor especies, asignamos la clase speciesBox
             var cajasInd = document.createElement("div");
             cajasInd.setAttribute("class", "speciesBox");
 
-            // Para crear los ids de las cajas de las especies cogemos los datos de la url.
+            // cajasInd->bigBox  
+            //| body | -> | main#contenedor | -> | bigBox#bigSpecies | -> | x8 cajasInd.speciesBox |
+            bigBox.appendChild(cajasInd);
+
+            // Extracción de ids cajasInd a través de url
             var ids = info.url;
 
-            // Asignamos los ids a las diferentes cajas. Usamos un slice para quedarnos solo con el nº de la especie.
+            // Asignación de los ids.
             cajasInd.setAttribute("id", "spe" + ids.slice(29, -1));
 
+            // Agregamos cajasInd.id en asignedIds ln.21
+            asignedIds.push(cajasInd.id);
+
+            //Creamos el contenedor principal que contendrá las imagenes y el nombre            
             var principalBox = document.createElement("div");
-            principalBox.setAttribute("id", "principal");
+            principalBox.setAttribute("class", "principal");
+
+            // principalBox->cajasInd
+            //| x8 cajasInd.speciesBox | -> | principalBox.principal |
+            cajasInd.appendChild(principalBox);
 
             // Creamos las imagenes y le asignamos la ruta.
             var imagenes = document.createElement("img");
             imagenes.setAttribute("src", imagesRute);
+            principalBox.appendChild(imagenes);
 
             // Creamos los encabezados con los nombres de las especies
             var nombres = document.createElement("h1");
+            nombres.setAttribute("class", "nombrestitle");
             nombres.innerHTML = info.name;
+            principalBox.appendChild(nombres);
 
-            // Metemos los ids de los elementos en el array que hemos creado en la línea 76.
-            asignedIds.push(cajasInd.id);
+
+            //Asignamos dos eventos para efecto botones
+            principalBox.addEventListener("mouseover", function () {
+
+                nombres.style.backgroundColor = "#ffc500";
+                nombres.style.color = "white";
+                nombres.style.transform = "translate(0px, -5px)";
+            });
+
+            principalBox.addEventListener("mouseout", function () {
+
+                nombres.style.backgroundColor = "#080808b3";
+                nombres.style.color = "white";
+                nombres.style.transform = "translate(25px, -59px)";
+            });
+
 
             // Creamos el evento click al pulsar en las diferentes especies
-            principalBox.addEventListener("click", crearcontenido);
+            principalBox.addEventListener("click", function () {
+
+                nombres.classList.replace('nombrestitle', 'secondstyle')
+
+                //Añadimos una clase a cajasInd que nos ayudará con su selección
+                cajasInd.classList.add("activa");
 
 
-            function crearcontenido() {
+                verificar();
 
+                //Identificamos que contenedor hemos pulsado y lo sacamos de asignedIds[]
+                var position = asignedIds.indexOf(cajasInd.id)
+                asignedIds.splice(position, 1)
 
-                // Creamos un contenedor donde meter la información. Le asignamos un id y lo unimos a la caja que contiene cada especie.
+                //Al resto de elementos de asignedIds[] los desvisualizamos
+                for (var x = 0; x < asignedIds.length; x++) {
+                    document.getElementById(asignedIds[x]).style.display = "none";
+                }
+
+                //Se ejecuta la selección
+                //Creamos otro contenedor secundario para sustituir al principal 
+                var principal2 = document.createElement("div");
+                principal2.setAttribute("id", "principal2");
+                cajasInd.appendChild(principal2);
+                nombres.style.animation = "move-hover 0.8s ease-in-out 1";
+
+                //imagenes + nombres ->principal2 
+                principal2.appendChild(imagenes);
+                principal2.appendChild(nombres);
+
+                //Desvisualizamos  el contenedor principalBox.principal
+                principalBox.style.display = "none";
+
+                // speInfo-> contenedor de información individual. 
                 var speInfo = document.createElement("div");
                 speInfo.setAttribute("id", "speContent");
+
+                // speInfo->cajasInd
+                //| cajasInd.speciesBox | -> | speInfo#speContent|
                 cajasInd.appendChild(speInfo);
 
-                // Resumen estructura | body | -> | main#contenedor | -> | bigBox#bigSpecies | -> | cajasInd.speciesBox x8 | -> | speInfo#speContent |
-
+                //Modificación estructura cajasInd y bigBox
+                bigBox.style.gridTemplateColumns = "auto";
                 cajasInd.style.display = "grid";
-                cajasInd.style.gridTemplateColumns = "30% auto";
+                cajasInd.style.gridTemplateColumns = "35% auto";
 
+                // Creamos las información que queremos introducir sobre la especie.
                 var datesList = document.createElement("ul");
                 datesList.setAttribute("id", "listado");
                 speInfo.appendChild(datesList);
 
-                // Creamos las información que queremos introducir sobre la especie.
-
+                //Color de ojos
                 var datosSpecies = document.createElement("li");
                 datosSpecies.innerHTML = "Color de ojos: " + info.eye_colors;
                 datesList.appendChild(datosSpecies);
 
-
+                //Color de pelo
                 var datosSpecies1 = document.createElement("li");
                 datosSpecies1.innerHTML = "Color de pelo: " + info.hair_colors;
                 datesList.appendChild(datosSpecies1);
 
+                //Color de piel
                 var datosSpecies2 = document.createElement("li");
                 datosSpecies2.innerHTML = "Color de piel: " + info.skin_colors;
                 datesList.appendChild(datosSpecies2);
 
+                //Lengua
                 var datosSpecies3 = document.createElement("li");
                 datosSpecies3.innerHTML = "Lenguaje: " + info.language;
                 datesList.appendChild(datosSpecies3);
 
-
-                var planetas = document.createElement("div");
-                planetas.setAttribute("class", "content");
-                speInfo.appendChild(planetas);
-
-
-                var planeta = document.createElement("p");
-                planeta.innerHTML = "Descubre su planeta natal";
-                planetas.appendChild(planeta);
-
-                var planetBox = document.createElement("div");
-                planetBox.setAttribute("class", "secondContent");
-                planetas.appendChild(planetBox);
+                //Personajes                
 
 
                 var personajes = document.createElement("div");
@@ -172,79 +166,76 @@ function peticionAjax(url, imagesRute) {
                 personaje.innerHTML = "Conoce los personajes de su especie";
                 personajes.appendChild(personaje);
 
+                //Creación contenedor para insertar los personajes indiv.
                 var nameBox = document.createElement("div");
                 nameBox.setAttribute("class", "secondContent");
                 personajes.appendChild(nameBox);
 
 
-                cajasInd.classList.add("activa");
+                //cnt-> variable de control para mostrar personajes
+                var cnt = 0;
 
-                bigBox.style.gridTemplateColumns = "auto";
+                personaje.addEventListener("click", function () {
+                    if (cnt === 0) {
 
-                verificar();
+                        //asignamos el url del nuevo fetch
+                        var personas = info.people;
 
-                var position = asignedIds.indexOf(cajasInd.id)
-                asignedIds.splice(position, 1)
+                        //efecto opacidad y display aparición de personajes
+                        nameBox.style.animation = "opacidad 2s linear 1";
+                        nameBox.style.display = "grid";
 
-                for (var x = 0; x < asignedIds.length; x++) {
-                    document.getElementById(asignedIds[x]).style.display = "none";
-                }
+                        //Cambio de texto personaje
+                        personaje.innerText = "Cerrar personajes";
 
+                        for (var y = 0; y < personas.length; y++) {
+                            fetch(personas[y])
+                                .then(res => res.json())
+                                .then(personData => {
 
+                                    console.log(personData);
 
-                cajasInd.removeEventListener("click", crearcontenido);
+                                    //personContent-> contenedor de los personajes
+                                    var personContent = document.createElement("div");
+                                    nameBox.appendChild(personContent);
 
-                personajes.addEventListener("click", function () {
+                                    //characterNumber-> sacar datos para las imagenes
+                                    var characterNumber = personData.url;
+                                    var personimagesRute = "https://starwars-visualguide.com/assets/img/characters/" + characterNumber.slice(28, -1) + ".jpg"
 
-                    var personas = info.people;
+                                    //personImages-> imagen donde introducimos la ruta de la img
+                                    var personImages = document.createElement("img");
+                                    personImages.setAttribute("src", personimagesRute);
+                                    personContent.appendChild(personImages);
 
+                                    //nombres-> nombre de los personajes
+                                    var nombres = document.createElement("h4");
+                                    nombres.innerHTML = personData.name;
+                                    personContent.appendChild(nombres);
 
-                    for (var y = 0; y < personas.length; y++) {
-                        fetch(personas[y])
-                            .then(res => res.json())
-                            .then(personData => {
+                                })
+                        }
 
-                                console.log(personData);
+                        cnt = 1;
 
+                    } else {
+                        //Si el contenedor ya ha sido pulsado una vez se elimina el contenido
+                        nameBox.innerHTML = '    ';
+                        nameBox.style.display = "none";
+                        personaje.innerHTML = "Conoce los personajes de su especie";
 
-                                var characterNumber = personData.url;
+                        cnt = 0;
 
-                                var personimagesRute = "https://starwars-visualguide.com/assets/img/characters/"+characterNumber.slice(28,-1)+".jpg"
-                                var personImages = document.createElement("img");
-                                personImages.setAttribute("src", personimagesRute);
-                                nameBox.appendChild(personImages);
-
-                                var nombres = document.createElement("h4");
-                                nombres.innerHTML = personData.name;
-                                nameBox.appendChild(nombres);
-
-
-
-
-
-                            })
 
                     }
-
                 })
-
-            }
-
-
-            bigBox.appendChild(cajasInd);
-            cajasInd.appendChild(principalBox);
-            principalBox.appendChild(imagenes);
-            principalBox.appendChild(nombres);
+            })
         })
-
+        .catch(error => console.error('error:', error));
 
 }
 
-for (var i = 0; i < species.length; i++) {
 
-    var imagesRute = "https://starwars-visualguide.com/assets/img/species/" + species[i] + ".jpg"
-    peticionAjax("https://swapi.co/api/species/" + species[i] + "/?format=json", imagesRute);
-}
 
 
 function verificar() {
@@ -267,12 +258,27 @@ function verificar() {
         console.log(asignedIds);
         document.body.removeChild(cerrar);
 
+        var content2 = document.querySelector(".activa div#principal2 h1");
+        var secondimage = document.querySelector(".activa div#principal2 img");
+
+        var prin = document.querySelector(".activa div.principal");
+        prin.style.display = "inline";
+
+        content2.classList.replace('secondstyle', 'nombrestitle');
+
+        selectec.appendChild(prin);
+        prin.appendChild(secondimage);
+        prin.appendChild(content2);
+
+
+        selectec.removeChild(principal2);
+
         var contenido = document.querySelector("#speContent");
 
         selectec.classList.remove("activa");
         selectec.removeChild(contenido);
 
-        bigBox.style.gridTemplateColumns = "auto auto auto auto";
+        bigBox.style.gridTemplateColumns = "25% 25% 25% 25%";
 
         for (var x = 0; x < asignedIds.length; x++) {
             document.getElementById(asignedIds[x]).style.display = "inline";
@@ -280,4 +286,5 @@ function verificar() {
 
     })
 }
+
 

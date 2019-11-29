@@ -7,16 +7,55 @@ div#img-intro {
     background-image: url(style/intro-imgf.jpg);
     background-attachment: fixed;
     background-position: top center;
-    background-size: 100% 560px;
+    background-size: 800px 350px;
+    height: 384px;
+
+
+}
+
+
+.twinkling {
+
+    height: 230px;
+
+    position: absolute;
+    top: 0;
+    width: 100%;
     text-align: center;
     color: white;
     font-family: Roboto;
     text-transform: uppercase;
     font-weight: 900;
     padding: 60px 0 75px;
+
+    background: url(style/twinkling.png) top center;
+    -moz-animation: stars 200s linear infinite;
+    -ms-animation: stars 200s linear infinite;
+    -o-animation: stars 200s linear infinite;
+    -webkit-animation: stars 200s linear infinite;
+    animation: stars 200s linear infinite;
+
+ 
 }
 
-div#img-intro img {
+svg {
+    width: 100%;
+    margin-top: -55px;
+    position: relative;
+    height: 71px;
+}
+
+.st0 {
+    fill: #FFFFFF;
+}
+
+@keyframes stars {
+    from {background-position:0 0;}
+    to {background-position:-10000px 5000px;}
+}
+
+
+div.twinkling img {
     width: 300px;
 }
 
@@ -83,9 +122,10 @@ div#seri {
 
 #bigSpecies {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 25% 25% 25% 25%;
     text-align: center;
-    grid-row-gap: 90px;
+    padding: 0px 0px 70px;
+
 }
 
 
@@ -102,13 +142,27 @@ nav#close {
     font-size: 38px;
     color: #ffc500;
     font-weight: 900;
+    transform: scale(0.9);
+    cursor: pointer;
+
+   
+}
+
+nav#close:hover {
+
+    transform: scale(1);
+   
 }
 
 
+.principal{
+    cursor: pointer;
+}
 
 div.speciesBox {
     display: grid;
-    margin-top: 70px;
+    margin: 70px 0px 0px;
+   
 }
 
 div#speContent {
@@ -126,9 +180,15 @@ div#speContent {
 }
 
 
+ul#listado li {
+    font-size: 18px;
+}
+
+
 div#speContent {
     text-align: left;
     margin-top: 50px;
+    margin-left: 80px
 }
 
 
@@ -144,6 +204,7 @@ ul#listado {
 .content {
     margin-left: 43px;
     margin-top: 25px;
+    cursor: pointer;
 }
 
 .content p {
@@ -161,8 +222,104 @@ li {
 
 .secondContent {
     margin-top: 20px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    text-align: center;
+    width: 80%;
+
+    margin-bottom: 80px;
 }
+
+@keyframes opacidad{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+
+
+
+
 .secondContent h4 {
     display: inline;
     margin: 20px;
+    display: inline;
+    margin: 20px auto 0px;
+    text-transform: uppercase;
+    font-weight: 100;
+    border-bottom: 1px solid black;
+  
+    padding-bottom: 5px;
+}
+
+.secondContent div {
+    display: grid;
+    padding: 20px 0px;
+    grid-template-columns: auto;
+    border: 5px solid white;
+    background-color: #fff9e3;
+    
+}
+
+.secondContent img {
+    width: 150px;
+    margin: auto;
+}
+
+.principal img {
+    margin-bottom: -4px;
+}
+
+.principal h1.nombrestitle {
+    padding: 40px 0;
+    width: 400px;
+    margin: auto;
+    background-color: #080808b3;
+    color: white;
+    transition: all 1s ease;
+    transform: translate(25px, -59px);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+
+.secondstyle {
+    background-color: #b5060d!important;
+    width: 387px;
+    height: 497px;
+    transform: rotate(90deg)!important;
+    position: absolute;
+    top: 500px;
+    margin-left: 165px;
+    padding-top: 25px;
+    text-transform: uppercase;
+    mix-blend-mode: soft-light;
+
+}
+
+
+@keyframes move-hover{
+
+    0%{
+        margin-left: 165px;
+    }
+
+    50%{
+        margin-left: 185px;
+    }
+
+    80%{
+        margin-left: 160px;
+    }
+}
+
+main#filmcont {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    text-align: center;
+    margin: 50px 0px;
+    row-gap: 64px;
 }
